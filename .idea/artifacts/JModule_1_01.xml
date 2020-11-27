@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="JModule-1.01">
+    <output-path>$USER_HOME$/Documents/Intellij/global_output</output-path>
+    <root id="archive" name="JModule-1.01.jar">
+      <element id="module-output" name="JModule" />
+      <element id="library" level="project" name="logmanagerapi" />
+      <element id="library" level="project" name="YamlUtilizer_1.01" />
+      <element id="library" level="project" name="consoleprinter-api" />
+      <element id="library" level="project" name="yamlbeans-1.06" />
+      <element id="library" level="project" name="snakeyaml-1.26" />
+      <element id="library" level="project" name="jansi-1.18" />
+    </root>
+  </artifact>
+</component>

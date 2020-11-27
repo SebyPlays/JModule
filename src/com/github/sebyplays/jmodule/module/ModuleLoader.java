@@ -1,6 +1,7 @@
 package com.github.sebyplays.jmodule.module;
 
 import com.github.sebyplays.jmodule.module.api.JavaModule;
+import com.github.sebyplays.jmodule.module.exceptions.InvalidModuleDescriptionException;
 import com.github.sebyplays.yamlutilizer.yaml.YamlUtilizer;
 import de.github.sebyplays.consoleprinterapi.api.ConsolePrinter;
 import de.github.sebyplays.logmanager.api.LogManager;
@@ -13,10 +14,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.CodeSource;
+import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-public class ModuleLoader {
+public class ModuleLoader{
 
 
     //TODO Change contents of ModuleInfo.txt to the following
@@ -38,29 +41,39 @@ public class ModuleLoader {
     public ModuleLoader() throws IOException {
         this.createDependentDirectories();
     }
-    public boolean loadModule(String moduleName) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException {
+    public boolean loadModule() throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException, InvalidModuleDescriptionException {
         FileReader fileReader = null;
-            LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + " is being  initialized..", true, false);
-        System.out.print("Indexing file.");
-        URL url = new File(System.getProperty("user.dir") + "/modules").toURI().toURL();
-        URL[] urls = new URL[]{url};
-                System.out.print("Indexing file..");
-                YamlUtilizer yamlUtilizer = new YamlUtilizer( System.getProperty("user.dir") + "/modules/" + moduleName + "/module.yml");
-                System.out.print("Indexing file...");
+        for(String moduleName : new File(System.getProperty("user.dir") + "/modules").list()){
 
+            LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + " is being  initialized..", true, false);
+            System.out.print("Indexing file.");
+            File file = new File(System.getProperty("user.dir") + "/modules/" + moduleName);
+            URL[] urls = new URL[]{file.toURI().toURL()};
+            System.out.print("Indexing file..");
+            JarFile jarFile = new JarFile(file);
+            jarFile.getInputStream(jarFile.getEntry("module.yml"));
+
+            ModuleDescriptor moduleDescriptor = new ModuleDescriptor(new File(String.valueOf(jarFile.getInputStream(jarFile.getEntry("module.yml")))));
+
+            if(moduleDescriptor == null){
+                throw new InvalidModuleDescriptionException();
+            }
+            System.out.print("Indexing file...");
+            ConsolePrinter.print(moduleDescriptor.getModuleDescription().getModuleMain(), false, true);
             ClassLoader classLoader = new URLClassLoader(urls);
 
-            Class jClass = classLoader.loadClass (yamlUtilizer.getString("main").replaceAll(".", "/") + "class");
+            Class jClass = classLoader.loadClass (moduleDescriptor.getModuleDescription().getModuleMain().replaceAll(".", "/"));
 
             Method method = jClass.getMethod("onActivation");
             method.invoke(null, null);
             LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + " successfully initialized.", true, false);
+        }
         return false;
     }
 
-    public boolean loadModule() throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public boolean loadModule(String moduleName) throws InvalidModuleDescriptionException, IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             FileReader fileReader = null;
-            for(String moduleName : new File(System.getProperty("user.dir") + "/modules/").list()){
+            for(String moduleName1 : new File(System.getProperty("user.dir") + "/modules/").list()){
                 LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + " is being  initialized..", true, false);
                 URL url = new File(System.getProperty("user.dir") + "/modules/").toURI().toURL();
                 URL[] urls = new URL[]{url};
