@@ -20,17 +20,17 @@ public class ModuleInfo implements ModuleDescription {
 
     @Override
     public String getModuleAuthor() {
-        return new ModuleDescriptor().moduleAuthor;
+        return ModuleDescriptor.moduleAuthor;
     }
 
     @Override
     public String getModuleVersion() {
-        return new ModuleDescriptor().moduleVersion;
+        return ModuleDescriptor.moduleVersion;
     }
 
     @Override
     public String getModuleMain() {
-        return new ModuleDescriptor().moduleMainPath;
+        return ModuleDescriptor.moduleMainPath;
     }
 
     public void setModuleName(String moduleName){

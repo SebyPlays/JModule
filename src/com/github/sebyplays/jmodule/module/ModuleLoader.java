@@ -52,14 +52,18 @@ public class ModuleLoader{
             System.out.print("Indexing file..");
             JarFile jarFile = new JarFile(file);
             jarFile.getInputStream(jarFile.getEntry("module.yml"));
-
-            ModuleDescriptor moduleDescriptor = new ModuleDescriptor(new File(String.valueOf(jarFile.getInputStream(jarFile.getEntry("module.yml")))));
-
+            InputStream inputStream = jarFile.getInputStream(jarFile.getEntry("module.yml"));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String tmp = "";
+            while((tmp = bufferedReader.readLine()) != null){
+                ConsolePrinter.print(tmp, false, false);
+            }
+            ModuleDescriptor moduleDescriptor = new ModuleDescriptor(jarFile.getInputStream(jarFile.getJarEntry("module.yml")));
             if(moduleDescriptor == null){
                 throw new InvalidModuleDescriptionException();
             }
             System.out.print("Indexing file...");
-            ConsolePrinter.print(moduleDescriptor.getModuleDescription().getModuleMain(), false, true);
+            System.out.println(moduleDescriptor.getModuleDescription().getModuleMain());
             ClassLoader classLoader = new URLClassLoader(urls);
 
             Class jClass = classLoader.loadClass (moduleDescriptor.getModuleDescription().getModuleMain().replaceAll(".", "/"));
@@ -89,7 +93,6 @@ public class ModuleLoader{
                         break;
                     }
                     System.out.print("Indexing file...");
-
                 }
 
                 ClassLoader classLoader = new URLClassLoader(urls);
