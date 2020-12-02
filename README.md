@@ -49,6 +49,24 @@ Step 9: Run your project.
 Step 10: Have fun!
 
 
+12/2/2020
+-
+Bug found!
+The ModuleLoader is *NOT* loading external classes,
+i found out that it gets its resources from the internal.
+
+What it exactly should do is, it should load the external main class and execute its methods
+in the given order:
+
+onLoad();
+onEnable();
+onDisable(); (if disabling)
+
+but what it currently does is, it is loading the plugin  description resources, but not the classes..
+it loads its class.
+
+Look at the code in the ModuleLoader class..
+everything should be mentioned there.
 
 11/29/2020
 -
