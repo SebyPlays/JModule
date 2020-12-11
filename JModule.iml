@@ -13,5 +13,6 @@
     <orderEntry type="library" name="yamlbeans-1.06" level="project" />
     <orderEntry type="library" name="snakeyaml-1.26" level="project" />
     <orderEntry type="library" name="jansi-1.18" level="project" />
+    <orderEntry type="library" name="command-api" level="project" />
   </component>
 </module>

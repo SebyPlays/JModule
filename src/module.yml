@@ -1,3 +1,2 @@
-author: "sebyplays"
-version: "1.1"
-main: "com.github.sebyplays.jmodule.module.api.JavaModule"
+main: com.github.sebyplays.jmodule.module.api.JavaModule
+name: JModule
