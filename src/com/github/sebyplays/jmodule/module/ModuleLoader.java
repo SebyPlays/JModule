@@ -70,6 +70,7 @@ public class ModuleLoader {
         URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{file.toURI().toURL()}, this.getClass().getClassLoader());
         Class jClass = Class.forName(this.getModuleYML(moduleName).getModuleMain(), true, urlClassLoader);
         Method method = jClass.getDeclaredMethod("onDisable");
+
         Object objectClassInstance = jClass.newInstance();
         method.invoke(objectClassInstance);
         LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Disabled module: " + moduleName.toUpperCase() + " successfully.", true, true);
