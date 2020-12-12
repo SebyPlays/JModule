@@ -49,6 +49,18 @@ Step 9: Run your project.
 Step 10: Have fun!
 
 
+12/12/2020
+-
+Previous bug fixed,
+
+ issue: Unknown
+
+ Description:
+
+  Due to a confusing and unknown reason, the bug suddenly disappeared and everything seemed to work just fine.
+
+
+
 12/2/2020
 -
 Bug found!
