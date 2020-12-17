@@ -16,6 +16,7 @@ public class JavaModule extends ModuleBase {
     }
 
     public void onEnable() {
+
     }
 
     public void onLoad() {

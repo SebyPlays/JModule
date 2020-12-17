@@ -18,6 +18,7 @@ public class ModuleDescriptor extends ModuleInfo {
     public static String moduleAuthor;
     public static String moduleMainPath;
     public static String moduleDescription;
+    public static String modulePriority;
     private final Yaml yaml = new Yaml();
     private InputStream inputStream;
     private DescriptorVariant descriptorVariant;
@@ -50,6 +51,7 @@ public class ModuleDescriptor extends ModuleInfo {
             moduleVersion = this.yamlUtilizer.getString("version");
             moduleName = this.yamlUtilizer.getString("name");
             moduleMainPath = this.yamlUtilizer.getString("main");
+            modulePriority = this.yamlUtilizer.getString("priority");
             return;
         }
         if (this.descriptorVariant == DescriptorVariant.INPUTSTREAMBASED) {
@@ -59,6 +61,7 @@ public class ModuleDescriptor extends ModuleInfo {
             moduleName = (String) keyVal.get("name");
             moduleVersion = (String) keyVal.get("version");
             moduleVersion = (String) keyVal.get("description");
+            modulePriority = (String) keyVal.get("priority");
         }
     }
 }

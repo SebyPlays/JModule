@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="JModule-1.04">
+  <artifact type="jar" build-on-make="true" name="JModule-1.05">
     <output-path>$USER_HOME$/Documents/Intellij/global_output</output-path>
-    <root id="archive" name="JModule-1.04.jar">
+    <root id="archive" name="JModule-1.05.jar">
       <element id="module-output" name="JModule" />
       <element id="library" level="project" name="logmanagerapi" />
       <element id="library" level="project" name="YamlUtilizer_1.01" />
