@@ -1,11 +1,11 @@
 # JModule
 
-###What is the JModule - api?
+### What is the JModule - api?
 -
 ```
 The JModule - api allows you to create external modules for your current java project.
 ```
-###How do i use the JModule - api?
+### How do i use the JModule - api?
 -
 ```
 Step 1: Create a host project, means the project you want to add modules in and execute the method 
