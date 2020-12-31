@@ -65,3 +65,12 @@ public class ModuleDescriptor extends ModuleInfo {
         }
     }
 }
+
+enum DescriptorVariant {
+
+    FILEBASED(1),
+    INPUTSTREAMBASED(0);
+
+    DescriptorVariant(int i) {
+    }
+}

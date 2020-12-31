@@ -11,10 +11,6 @@ public class JavaModule extends ModuleBase {
     public JavaModule() throws IOException {
     }
 
-    public static void main(String[] args) throws IOException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        new ModuleLoader().loadModules();
-    }
-
     public void onEnable() {
 
     }

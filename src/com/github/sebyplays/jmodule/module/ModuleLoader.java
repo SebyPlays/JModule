@@ -1,8 +1,8 @@
 package com.github.sebyplays.jmodule.module;
 
 import com.github.sebyplays.jmodule.module.exceptions.InvalidModuleDescriptionException;
-import de.github.sebyplays.logmanager.api.LogManager;
-import de.github.sebyplays.logmanager.api.LogType;
+import com.github.sebyplays.logmanager.api.LogManager;
+import com.github.sebyplays.logmanager.api.LogType;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,9 +33,9 @@ public class ModuleLoader {
 
     //load a specific module
     public void loadModule(String moduleName) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException, InvalidModuleDescriptionException, InstantiationException {
-        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + " is being  initialized..", true, true);
+        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + " is being  initialized..", false, false, true, true);
         invokeMethod(moduleName, "onLoad");
-        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + " successfully initialized.", true, true);
+        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + " successfully initialized.", false, false, true, true);
         enableModule(moduleName);
         return;
     }
@@ -43,7 +43,7 @@ public class ModuleLoader {
     public void enableModule(String moduleName) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         invokeMethod(moduleName, "onEnable");
         this.modulePID.put(moduleName.toUpperCase(), nextPID++);
-        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + "::" + this.modulePID.get(moduleName.toUpperCase()) + " successfully enabled.", true, true);
+        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.toUpperCase() + "::" + this.modulePID.get(moduleName.toUpperCase()) + " successfully enabled.", false, false, true, true);
     }
 
     public void disableModules() throws NoSuchMethodException, IOException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
@@ -53,24 +53,24 @@ public class ModuleLoader {
     }
 
     public void disableModule(String moduleName) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Killing process: " + moduleName.toUpperCase() + "::" + this.modulePID.get(moduleName.toUpperCase()) + "..", true, true);
+        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Killing process: " + moduleName.toUpperCase() + "::" + this.modulePID.get(moduleName.toUpperCase()) + "..", false, false, true, true);
         this.modulePID.remove(moduleName.toUpperCase());
         invokeMethod(moduleName, "onDisable");
-        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Disabled module: " + moduleName.toUpperCase() + " successfully.", true, true);
+        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Disabled module: " + moduleName.toUpperCase() + " successfully.", false, false, true, true);
     }
 
     public void reloadModules() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Modules are being reloaded..", true, true);
+        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Modules are being reloaded..", false, false, true, true);
         this.disableModules();
         loadModules();
-        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Modules reloaded successfully..", true, true);
+        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Modules reloaded successfully..", false, false, true, true);
         return;
     }
 
     private void createDependentDirectories() throws IOException {
         if (!(new File(System.getProperty("user.dir") + "/modules")).exists()) {
             new File(System.getProperty("user.dir") + "/modules").mkdirs();
-            LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Dependent Module directory has been created..", true, true);
+            LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Dependent Module directory has been created..", false, false, true, true);
             return;
         }
         return;
