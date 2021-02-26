@@ -2,6 +2,7 @@ package com.github.sebyplays.jmodule.module;
 
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.github.sebyplays.yamlutilizer.yaml.YamlUtilizer;
+import lombok.SneakyThrows;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -13,12 +14,7 @@ public class ModuleDescriptor extends ModuleInfo {
     private final YamlUtilizer yamlUtilizer = new YamlUtilizer();
     private File file;
 
-    public static String moduleName;
-    public static String moduleVersion;
-    public static String moduleAuthor;
-    public static String moduleMainPath;
-    public static String moduleDescription;
-    public static String modulePriority;
+
     private final Yaml yaml = new Yaml();
     private InputStream inputStream;
     private DescriptorVariant descriptorVariant;
@@ -44,7 +40,8 @@ public class ModuleDescriptor extends ModuleInfo {
         return file.getName();
     }
 
-    public void getModuleDescription() throws FileNotFoundException {
+    @SneakyThrows
+    public String getModuleDescription(){
         if (this.descriptorVariant == DescriptorVariant.FILEBASED) {
             moduleAuthor = this.yamlUtilizer.getString("author");
             moduleDescription = this.yamlUtilizer.getString("description");
@@ -52,7 +49,7 @@ public class ModuleDescriptor extends ModuleInfo {
             moduleName = this.yamlUtilizer.getString("name");
             moduleMainPath = this.yamlUtilizer.getString("main");
             modulePriority = this.yamlUtilizer.getString("priority");
-            return;
+            return super.moduleDescription;
         }
         if (this.descriptorVariant == DescriptorVariant.INPUTSTREAMBASED) {
             Map<String, Object> keyVal = yaml.load(this.inputStream);
@@ -63,6 +60,7 @@ public class ModuleDescriptor extends ModuleInfo {
             moduleVersion = (String) keyVal.get("description");
             modulePriority = (String) keyVal.get("priority");
         }
+        return super.moduleDescription;
     }
 }
 

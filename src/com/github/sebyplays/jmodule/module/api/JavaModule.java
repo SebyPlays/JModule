@@ -1,12 +1,10 @@
 package com.github.sebyplays.jmodule.module.api;
 
-import com.github.sebyplays.jmodule.module.ModuleBase;
 import com.github.sebyplays.jmodule.module.ModuleLoader;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
-public class JavaModule extends ModuleBase {
+public class JavaModule extends ModuleLoader {
 
     public JavaModule() throws IOException {
     }

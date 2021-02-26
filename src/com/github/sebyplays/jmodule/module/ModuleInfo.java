@@ -1,8 +1,15 @@
 package com.github.sebyplays.jmodule.module;
 
-public class ModuleInfo implements ModuleDescription {
+import lombok.Getter;
 
-    private String moduleName = null;
+public class ModuleInfo {
+
+    @Getter public String moduleName;
+    @Getter public String moduleVersion;
+    @Getter public String moduleAuthor;
+    @Getter public String moduleMainPath;
+    @Getter public String moduleDescription;
+    @Getter public String modulePriority;
 
     public ModuleInfo(String moduleName){
         this.moduleName = moduleName;
@@ -11,26 +18,6 @@ public class ModuleInfo implements ModuleDescription {
 
     public ModuleInfo(){
         return;
-    }
-
-    @Override
-    public String getModuleName() {
-        return new ModuleDescriptor().moduleName;
-    }
-
-    @Override
-    public String getModuleAuthor() {
-        return ModuleDescriptor.moduleAuthor;
-    }
-
-    @Override
-    public String getModuleVersion() {
-        return ModuleDescriptor.moduleVersion;
-    }
-
-    @Override
-    public String getModuleMain() {
-        return ModuleDescriptor.moduleMainPath;
     }
 
     public void setModuleName(String moduleName){
