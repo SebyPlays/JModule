@@ -30,8 +30,8 @@ public class ModuleInvoker {
 
     //gets the module descriptor
     @SneakyThrows
-    private ModuleDescriptor getModuleYML(Module module){
-        JarFile jarFile = new JarFile(module.getPath());
+    public ModuleDescriptor getModuleYML(Module module){
+        JarFile jarFile = new JarFile(module.getPath().getPath());
 
         module.moduleDescriptor = new ModuleDescriptor(jarFile.getInputStream(jarFile.getJarEntry("module.yml")));
         if (module.getModuleDescriptor() == null)
@@ -49,7 +49,7 @@ public class ModuleInvoker {
 
     @SneakyThrows
     public void invokeMethod(Module module, String methodName){
-        Class jClass = Class.forName(this.getModuleYML(module).getModuleMainPath(), true, new URLClassLoader(new URL[]{module.getPath().toURI().toURL()}, this.getClass().getClassLoader()));
+        Class jClass = Class.forName(module.getModuleInfo().getModuleMainPath(), true, new URLClassLoader(new URL[]{module.getPath().toURI().toURL()}, this.getClass().getClassLoader()));
         Method method = jClass.getDeclaredMethod(methodName);
         method.invoke(jClass.newInstance());
     }

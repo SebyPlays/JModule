@@ -10,9 +10,16 @@ public class ModuleInfo {
     @Getter public String moduleMainPath;
     @Getter public String moduleDescription;
     @Getter public String modulePriority;
+    @Getter public Module module;
 
-    public ModuleInfo(String moduleName){
-        this.moduleName = moduleName;
+    public ModuleInfo(Module module){
+        this.module = module;
+        this.moduleName = module.getModuleDescriptor().moduleName;
+        this.moduleVersion = module.getModuleDescriptor().moduleVersion;
+        this.moduleAuthor = module.getModuleDescriptor().moduleAuthor;
+        this.moduleMainPath = module.getModuleDescriptor().moduleMainPath;
+        this.moduleDescription = module.getModuleDescriptor().moduleDescription;
+        this.modulePriority = module.getModuleDescriptor().modulePriority;
         return;
     }
 

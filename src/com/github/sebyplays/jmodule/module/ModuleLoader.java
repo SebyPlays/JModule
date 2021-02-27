@@ -27,18 +27,21 @@ public class ModuleLoader extends ModuleInvoker{
     @SneakyThrows
     public void loadModules() {
         for (String moduleName : new File(System.getProperty("user.dir") + "/modules").list()) {
-            if(multiThreading){
-                Module module = new Module(new File(moduleName));
-                this.threads.put(module.getModuleUUID(), new Thread(){
-                    @SneakyThrows
-                    @Override
-                    public void run() {
-                        loadModule(module);
-                    }
-                });
-                return;
+            if(!new File(moduleName).isDirectory()){
+                if(multiThreading){
+                    Module module = new Module(new File(System.getProperty("user.dir") + "/modules/" + moduleName));
+                    this.threads.put(module.getModuleUUID(), new Thread(){
+                        @SneakyThrows
+                        @Override
+                        public void run() {
+                            loadModule(module);
+                        }
+                    });
+                    this.threads.get(module.getModuleUUID()).start();
+                } else {
+                    loadModule(new Module(new File(System.getProperty("user.dir") + "/modules/" + moduleName)));
+                }
             }
-            loadModule(new Module(new File(moduleName)));
         }
         return;
     }
@@ -56,7 +59,7 @@ public class ModuleLoader extends ModuleInvoker{
     public void enableModule(Module moduleName){
         invokeMethod(moduleName, "onEnable");
         this.modules.put(moduleName.getModuleUUID(), moduleName);
-        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.getModuleInfo().getModuleName().toUpperCase() + "::" + this.modules.get(moduleName) + " successfully enabled.", false, false, true, true);
+        LogManager.getLogManager("JModule").log(LogType.INFORMATION, "Module " + moduleName.getModuleInfo().getModuleName().toUpperCase() + "::" + this.modules.get(moduleName.getModuleUUID()).getModuleUUID() + " successfully enabled.", false, false, true, true);
     }
 
     public void disableModules() {

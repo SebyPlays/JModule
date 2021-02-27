@@ -20,7 +20,6 @@ public class ModuleDescriptor extends ModuleInfo {
     private DescriptorVariant descriptorVariant;
 
     public ModuleDescriptor(File fileName) throws FileNotFoundException, YamlException {
-        super(fileName.getName());
         this.file = fileName;
         this.yamlUtilizer.setFile(this.file);
         this.yamlUtilizer.load();
